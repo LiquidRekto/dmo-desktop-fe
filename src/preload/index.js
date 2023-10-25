@@ -22,6 +22,3 @@ if (process.contextIsolated) {
   window.electron = electronAPI
   window.api = api
 }
-
-contextBridge.exposeInMainWorld('electron', electronAPI)
-contextBridge.exposeInMainWorld('api', api)

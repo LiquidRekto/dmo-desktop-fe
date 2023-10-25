@@ -4,19 +4,22 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import path from 'path'
 //import icon from '../../resources/dmo_logo.png?asset'
 
-function createWindow() {
+let mainWindow = null;
+const RATE = 0.75;
+
+function createWindow(width, height) {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1600,
-    height: 900,
+  mainWindow = new BrowserWindow({
+    width: width,
+    height: height,
     show: false,
-    icon: path.join(__dirname,'resources/dmo_logo.ico'),
+    icon: path.join(__dirname, 'resources/dmo_logo.ico'),
     frame: false,
     autoHideMenuBar: true,
     //...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      nodeIntegration: true,
+      nodeIntegration: false,
       contextIsolation: true,
       enableRemoteModule: true,
       sandbox: false
@@ -39,25 +42,32 @@ function createWindow() {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  
 }
 
+app.on('ready',() => {
+  // This is for handling renderer events
+  ipcMain.on('ev-toggle-maximize', (e, dat) => {
+    console.log(dat)
+    if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
+    } else {
+      mainWindow.maximize();
+    }
+    ipcMain.emit("re-maximize-state", {isMaximized: mainWindow.isMaximized()})
+    console.log("MESSAGE SENT!");
+  })
 
-// This is for handling renderer events
-ipcMain.on('ev-toggle-maximize', (e) => {
-  if (mainWindow.isMaximize()) {
-    mainWindow.unmaximize();
-  } else {
-    mainWindow.maximize();
-  }
+  ipcMain.on('ev-minimize', (e) => {
+    mainWindow.minimize();
+  })
+
+  ipcMain.on('ev-close', (e) => {
+    mainWindow.close();
+  })
 })
 
-ipcMain.on('ev-minimize', (e) => {
-  mainWindow.minimize();
-})
-
-ipcMain.on('ev-close', (e) => {
-  mainWindow.close();
-})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -65,7 +75,9 @@ ipcMain.on('ev-close', (e) => {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron')
-
+  const { screen } = require('electron')
+  const primaryDisplay = screen.getPrimaryDisplay()
+  const { width, height } = primaryDisplay.workAreaSize
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
@@ -73,7 +85,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  createWindow()
+  createWindow(width*RATE, height*RATE)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

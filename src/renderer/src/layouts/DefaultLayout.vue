@@ -13,7 +13,6 @@ window.api.receive("re-maximize-state", (data) => {
 })
 
 
-
 let funcHanlder = (ev) => {
     switch (ev) {
         case "close":
@@ -59,28 +58,47 @@ const toggleDrawer = () => {
         <!-- sidebar section -->
 
 
-        <v-navigation-drawer class="pa-2" temporary v-model="drawer">
+        <v-navigation-drawer class="pa-2" temporary v-model="drawer" width="350">
             <v-list>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/" title="Dashboard"
                     prepend-icon="gauge"></v-list-item>
-                <v-divider  class="ma-2"></v-divider>
+                <v-divider class="ma-2"></v-divider>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/hr" title="Human Resources"
                     prepend-icon="users"></v-list-item>
-                <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/management" title="Line Managemnt"
-                    prepend-icon="bars-progress"></v-list-item>
+                <v-list-group>
+                    <template v-slot:activator>
+                        <v-list-item-content>
+                            <v-list-item-title>Group 1</v-list-item-title>
+                        </v-list-item-content>
+                    </template>
+
+                    <v-list-item>
+                        <v-list-item-content>
+                            <v-list-item-title>Item 1</v-list-item-title>
+                        </v-list-item-content>
+                    </v-list-item>
+
+                    <!-- Add more items as needed -->
+                </v-list-group>
+                <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/mng/line"
+                    title="Line Managemnt" prepend-icon="bars-progress"></v-list-item>
+                <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/mng/skills"
+                    title="Skills Managemnt" prepend-icon="clipboard-list"></v-list-item>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/history" title="History"
                     prepend-icon="clock-rotate-left"></v-list-item>
+                <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/schedule" title="Schedule"
+                    prepend-icon="calendar-days"></v-list-item>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/setting" title="Settings"
-                        prepend-icon="gear"></v-list-item>
+                    prepend-icon="gear"></v-list-item>
             </v-list>
         </v-navigation-drawer>
-        
+
         <body class="h-screen">
             <v-main class="">
                 <v-content>
                     <slot></slot>
                 </v-content>
-                
+
             </v-main>
         </body>
     </v-app>
@@ -99,4 +117,5 @@ body {
 
 #title-bar button {
     -webkit-app-region: no-drag;
-}</style>
+}
+</style>

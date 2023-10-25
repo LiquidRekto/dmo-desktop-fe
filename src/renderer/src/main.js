@@ -1,3 +1,5 @@
+import './assets/css/additional-utilities.css'
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'

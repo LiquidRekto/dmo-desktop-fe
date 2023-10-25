@@ -69,6 +69,14 @@ app.on('ready',() => {
   ipcMain.on('ev-close', (e) => {
     mainWindow.close();
   })
+
+  ipcMain.on('ev-drawer-on',(e,data) => {
+    e.sender.send('re-drawer-interact', {isOpen: data.isOpen})
+  })
+
+  ipcMain.on('ev-update-node-data',(e,key) => {
+    e.sender.send('re-update-node-data', {key: key})
+  })
 })
 
 

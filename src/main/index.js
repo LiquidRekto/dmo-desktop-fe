@@ -48,15 +48,13 @@ function createWindow(width, height) {
 
 app.on('ready',() => {
   // This is for handling renderer events
-  ipcMain.on('ev-toggle-maximize', (e, dat) => {
-    console.log(dat)
+  ipcMain.on('ev-toggle-maximize', (e) => {
     if (mainWindow.isMaximized()) {
       mainWindow.unmaximize();
     } else {
       mainWindow.maximize();
     }
-    ipcMain.emit("re-maximize-state", {isMaximized: mainWindow.isMaximized()})
-    console.log("MESSAGE SENT!");
+    e.sender.send("re-maximize-state", {isMaximized: mainWindow.isMaximized()})
   })
 
   ipcMain.on('ev-minimize', (e) => {

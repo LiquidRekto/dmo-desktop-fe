@@ -1,6 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router'
 
+import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
@@ -12,7 +14,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 
 
-
 const vuetify = createVuetify({
     
     icons: {
@@ -22,7 +23,6 @@ const vuetify = createVuetify({
             fa
         }
     },
-    
     components,
     directives,
 })
@@ -30,6 +30,7 @@ const vuetify = createVuetify({
 const app = createApp(App)
 
 app.use(vuetify)
+app.use(router)
 
 app.component('font-awesome-icon', FontAwesomeIcon)
 library.add(fas)

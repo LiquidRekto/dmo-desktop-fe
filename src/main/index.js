@@ -1,17 +1,22 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
+
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import path from 'path'
 //import icon from '../../resources/dmo_logo.png?asset'
 
+
 let mainWindow = null;
 const RATE = 0.75;
+const MINRATE = 0.4;
 
-function createWindow(width, height) {
+function createWindow(screenWidth, screenHeight) {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: width,
-    height: height,
+    width: screenWidth*RATE,
+    height: screenHeight*RATE,
+    minWidth: screenWidth*MINRATE,
+    minHeight: screenHeight*MINRATE*1.5,
     show: false,
     icon: path.join(__dirname, 'resources/dmo_logo.ico'),
     frame: false,
@@ -83,7 +88,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  createWindow(width*RATE, height*RATE)
+  createWindow(width, height)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

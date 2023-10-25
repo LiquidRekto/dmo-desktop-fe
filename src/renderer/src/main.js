@@ -6,13 +6,13 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader'
 
 import { aliases, fa } from 'vuetify/iconsets/fa-svg'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
-
 
 const vuetify = createVuetify({
     
@@ -23,7 +23,10 @@ const vuetify = createVuetify({
             fa
         }
     },
-    components,
+    components: {
+        ...components,
+        VSkeletonLoader
+    },
     directives,
 })
 

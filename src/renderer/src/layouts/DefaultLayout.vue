@@ -74,7 +74,7 @@ const toggleDrawer = () => {
                         prepend-icon="gear"></v-list-item>
             </v-list>
         </v-navigation-drawer>
-
+        
         <body class="h-screen">
             <v-main class="">
                 <v-content>

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import DiagramCanvas from '../components/DiagramCanvas.vue';
+import DiagramCanvasOnlyLine from '../components/DiagramCanvasOnlyLine.vue';
 let drawer = ref(false);
 let key = ref(null)
 window.api.receive('re-drawer-interact', (data) => {
@@ -15,17 +16,20 @@ window.api.receive('re-update-node-data', (data) => {
 </script>
 <template>
     <v-container fluid class="h-screen pa-0">
-        <DiagramCanvas styleClass="belowNavHeight" :drawer="drawer" />
+        <DiagramCanvasOnlyLine styleClass="belowNavHeight" :drawer="drawer" />
         <v-navigation-drawer color="blue-grey-lighten-5" class="drawer" v-model="drawer" permanent location="bottom">
             <div class="text-center">
                 <v-btn color="primary" @click.stop="drawer = !drawer" icon style="transform: translateY(-25px);" class="text-center">
                     <v-icon>fa-chevron-down</v-icon>
                 </v-btn>
             </div>
-
-            <v-list-item link>
-                <v-list-item-title>{{ key  }}</v-list-item-title>
-            </v-list-item>
+            <v-row>
+                <v-col cols="4">
+                    <v-text-field variant="outlined" label></v-text-field>
+                </v-col>
+                <v-col cols="4"></v-col>
+                <v-col cols="4"></v-col>
+            </v-row>
         </v-navigation-drawer>
     </v-container>
 </template>

@@ -81,7 +81,7 @@ const toggleDrawer = () => {
                     <!-- Add more items as needed -->
                 </v-list-group>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/mng/skills"
-                    title="Skills Managemnt" prepend-icon="clipboard-list"></v-list-item>
+                    title="Skills Management" prepend-icon="clipboard-list"></v-list-item>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/history" title="History"
                     prepend-icon="clock-rotate-left"></v-list-item>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/schedule" title="Schedule"

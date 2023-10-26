@@ -23,9 +23,15 @@ window.api.receive('re-update-node-data', (data) => {
                 </v-btn>
             </div>
 
-            <v-list-item link>
-                <v-list-item-title>{{ key  }}</v-list-item-title>
-            </v-list-item>
+            <v-row class="px-12">
+                <v-col cols="4">
+                    <v-text-field variant="outlined" label="Start"></v-text-field>
+                </v-col>
+                <v-col cols="4">
+                    <v-text-field variant="outlined" label="Duration"></v-text-field>
+                </v-col>
+                <v-col cols="4"></v-col>
+            </v-row>
         </v-navigation-drawer>
     </v-container>
 </template>

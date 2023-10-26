@@ -34,7 +34,5 @@ window.api.receive('re-update-node-data', (data) => {
   overflow: visible !important;
 }
 
-.belowNavHeight {
-    height: calc(100vh - 48px);
-}
+
 </style>

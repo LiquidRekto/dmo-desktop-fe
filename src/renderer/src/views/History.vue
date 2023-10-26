@@ -1,4 +1,9 @@
 <script setup>
+import { onMounted } from 'vue';
+
+onMounted(async () => {
+
+})
 </script>
 <template>
     <v-container fluid class="pa-0">

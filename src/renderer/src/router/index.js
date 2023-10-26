@@ -4,6 +4,7 @@ import Setting from '../views/Setting.vue'
 import HumanResources from '../views/HumanResources.vue'
 import SkillsManagement from '../views/SkillsManagement.vue'
 import LineManagement from '../views/LineManagement.vue'
+import LineDepsManagement from '../views/LineDepsManagement.vue'
 import Schedule from '../views/Schedule.vue'
 import History from '../views/History.vue'
 import UserDetails from '../views/UserDetails.vue'
@@ -38,9 +39,14 @@ const router = createRouter({
       component: SkillsManagement
     },
     {
-      path: '/mng/line',
-      name: 'line-management',
+      path: '/mng/lines',
+      name: 'lines-management',
       component: LineManagement
+    },
+    {
+      path: '/mng/lines/dependencies',
+      name: 'line-dependency-management',
+      component: LineDepsManagement
     },
     {
       path: '/schedule',

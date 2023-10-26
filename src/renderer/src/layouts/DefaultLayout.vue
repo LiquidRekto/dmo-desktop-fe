@@ -65,23 +65,21 @@ const toggleDrawer = () => {
                 <v-divider class="ma-2"></v-divider>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/hr" title="Human Resources"
                     prepend-icon="users"></v-list-item>
-                <v-list-group>
-                    <template v-slot:activator>
-                        <v-list-item-content>
-                            <v-list-item-title>Group 1</v-list-item-title>
-                        </v-list-item-content>
+
+                <v-list-group value="Lmao">
+                    <template v-slot:activator="{ props }">
+                        <v-list-item v-bind="props" prepend-icon="bars-progress" title="Line Management"></v-list-item>
                     </template>
 
-                    <v-list-item>
-                        <v-list-item-content>
-                            <v-list-item-title>Item 1</v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
+
+                    <v-list-item class="rounded-lg pl-0" color="primary" @click="toggleDrawer" link to="/mng/lines"
+                        title="Lines" prepend-icon="diagram-project"></v-list-item>
+                    <v-list-item class="rounded-lg pl-0" color="primary" @click="toggleDrawer" link to="/mng/lines/dependencies"
+                        title="Line Dependencies" prepend-icon="diagram-predecessor"></v-list-item>
+
 
                     <!-- Add more items as needed -->
                 </v-list-group>
-                <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/mng/line"
-                    title="Line Managemnt" prepend-icon="bars-progress"></v-list-item>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/mng/skills"
                     title="Skills Managemnt" prepend-icon="clipboard-list"></v-list-item>
                 <v-list-item class="rounded-lg" color="primary" @click="toggleDrawer" link to="/history" title="History"

@@ -9,9 +9,14 @@ onMounted(async () => {
     <v-container fluid class="pa-0">
         <v-list lines="one" class="pa-12 overflow-y-auto overflow-x-hidden belowNavHeight">
             <v-row>
-                <v-col cols="12">
+                <v-col cols="6">
                     <h1>History</h1>
                 </v-col>
+                <v-col cols="6" class="d-flex justify-end align-center">
+                        <v-btn prepend-icon="arrow-rotate-right">
+                            Refresh
+                        </v-btn>
+                    </v-col>
             </v-row>
             
             <v-row>

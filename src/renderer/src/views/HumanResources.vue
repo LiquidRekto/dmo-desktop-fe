@@ -82,7 +82,7 @@ onMounted(async () => {
                                         Make amends
                                     </v-chip>
                                 </h4>
-                                <v-card-title>Age: <b>30</b></v-card-title>
+                                <v-card-title>Age: <b>{{ users[(x - 1) * 3 + y - 1]['age'] }}</b></v-card-title>
                                 <v-card-subtitle>Email: {{ users[(x - 1) * 3 + y - 1]['email'] }}</v-card-subtitle>
                             </v-card>
                         </v-col>

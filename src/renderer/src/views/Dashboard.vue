@@ -1,4 +1,13 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+import { getDashboardSummary } from '../services/misc.api'
+
+let dashboardDat = ref(null)
+onMounted(async () => {
+    const res = await getDashboardSummary();
+    dashboardDat.value = res.data.data
+
+})
 </script>
 <template>
     <v-container class="pa-4 pt-8 text-center">
@@ -22,7 +31,11 @@
                     <v-avatar size="x-large" class="border bg-white float-up elevation-3">
                         <v-icon color="primary">fa-user</v-icon>
                     </v-avatar>
-                    <h1 class="text-giant text-primary">5</h1>
+                    
+                    <p class="text-giant" v-if="!dashboardDat">
+                        <v-progress-circular :size="100" :width="10" indeterminate></v-progress-circular>
+                    </p>
+                    <h1 v-if="dashboardDat" class="text-giant text-primary">{{ dashboardDat.employeeCount }}</h1>
                     <v-card-title size="large">current employees</v-card-title>
                 </v-card>
             </v-col>
@@ -32,8 +45,11 @@
                         <v-icon color="primary">fa-list-check</v-icon>
                     </v-avatar>
                     <br />
-                    <b class="text-giant text-primary">3</b>
-                    <v-card-title>current tasks</v-card-title>
+                    <p class="text-giant" v-if="!dashboardDat">
+                        <v-progress-circular :size="100" :width="10" indeterminate></v-progress-circular>
+                    </p>
+                    <b v-if="dashboardDat" class="text-giant text-primary">0</b>
+                    <v-card-title>current lines</v-card-title>
                 </v-card>
             </v-col>
             <v-col cols="4">
@@ -42,7 +58,10 @@
                         <v-icon color="primary">fa-screwdriver-wrench</v-icon>
                     </v-avatar>
                     <br />
-                    <b class="text-giant text-primary" >5</b>
+                    <p class="text-giant" v-if="!dashboardDat">
+                        <v-progress-circular :size="100" :width="10" indeterminate></v-progress-circular>
+                    </p>
+                    <b v-if="dashboardDat" class="text-giant text-primary" >{{ dashboardDat.skillCount }}</b>
                     <v-card-title>current skills</v-card-title>
                 </v-card>
             </v-col>

@@ -1,8 +1,14 @@
 <script setup>
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
+import { getAllHistory } from '../services/history.api'
+
+let historyDat = ref(null)
 
 onMounted(async () => {
+    const res = await getAllHistory()
 
+    historyDat.value = res.data.data
+    console.log(historyDat.value)
 })
 </script>
 <template>
@@ -13,12 +19,12 @@ onMounted(async () => {
                     <h1>History</h1>
                 </v-col>
                 <v-col cols="6" class="d-flex justify-end align-center">
-                        <v-btn prepend-icon="arrow-rotate-right">
-                            Refresh
-                        </v-btn>
-                    </v-col>
+                    <v-btn prepend-icon="arrow-rotate-right">
+                        Refresh
+                    </v-btn>
+                </v-col>
             </v-row>
-            
+
             <v-row>
                 <v-col cols="12">
                     <v-expansion-panels>
@@ -33,8 +39,9 @@ onMounted(async () => {
                                         <v-text-field variant="outlined" label="Schedule Name"></v-text-field>
                                     </v-col>
                                     <v-col cols="4">
-                                        <v-select variant="outlined"  v-model="value" :items="['Pending','Failed','Succeeded']" chips
-                                            label="Skills" multiple></v-select>
+                                        <v-select variant="outlined" v-model="value"
+                                            :items="['Pending', 'Failed', 'Succeeded']" chips label="Skills"
+                                            multiple></v-select>
                                     </v-col>
                                 </v-row>
                                 <v-row>
@@ -48,7 +55,15 @@ onMounted(async () => {
                     </v-expansion-panels>
                 </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="!historyDat">
+                <v-col cols="12">
+                    <v-skeleton-loader type="card"></v-skeleton-loader>
+                <v-skeleton-loader type="card"></v-skeleton-loader>
+                <v-skeleton-loader type="card"></v-skeleton-loader>
+                </v-col>
+                
+            </v-row>
+            <v-row v-if="historyDat">
                 <v-col cols="12">
                     <v-card class="px-12 py-4 elevation-3 rounded-lg border">
                         <v-table class="border-0">
@@ -69,20 +84,25 @@ onMounted(async () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="x in 10">
+                                <tr v-for="x in historyDat">
                                     <td>
                                         <v-text-field variant="outlined" placeholder="Type schedule name here" class="py-4"
-                                            hide-details model-value="schedule_generated_2023_10_25_0110101"></v-text-field>
+                                            hide-details :model-value="x.scheduleName"></v-text-field>
                                     </td>
                                     <td class="align-center">
-                                        2023-10-25 15:00:00 GMT+07
+                                        {{ x.scheduledAt}}
                                     </td>
                                     <td>
-                                        <b class="text-red">LMAO'D</b>
+                                        <b v-if="x.status == 0" class="text-red">FAILED</b>
+                                        <b v-if="x.status == 1" class="text-green">SUCCEEDED</b>
+                                        <b v-if="x.status == 2" class="text-orange">PENDING</b>
                                     </td>
                                     <td>
-                                        <v-btn link to="/history/1" class="mx-3" color="green">View</v-btn>
+                                        <div v-if="x.status == 1">
+                                            <v-btn link to="/history/1" class="mx-3" color="green">View</v-btn>
                                         <v-btn class="mx-3" color="red">Delete</v-btn>
+                                        </div>
+                                        
                                     </td>
                                 </tr>
                             </tbody>

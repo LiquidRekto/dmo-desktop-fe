@@ -74,8 +74,9 @@ app.on('ready',() => {
     e.sender.send('re-drawer-interact', {isOpen: data.isOpen})
   })
 
-  ipcMain.on('ev-update-node-data',(e,key) => {
-    e.sender.send('re-update-node-data', {key: key})
+  ipcMain.on('ev-update-node-data',(e,data) => {
+    
+    e.sender.send('re-update-node-data', {start: data.data.start, duration: data.data.duration, taskName: data.data.taskName})
   })
 })
 

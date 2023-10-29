@@ -16,7 +16,7 @@ onMounted(() => {
     e => {
         var part = e.subject.part;
       window.api.send('ev-drawer-on',{isOpen: true})
-      window.api.send('ev-update-node-data',{key: part.data.key})
+      window.api.send('ev-update-node-data',{data: part.data})
       
     });
 
@@ -26,19 +26,22 @@ onMounted(() => {
     });
 
     diagram.nodeTemplate =
-  new go.Node("Vertical",
-    {
-      locationSpot: go.Spot.Center
-    })
-    .bind("location", "loc")
-    .add(new go.Shape("RoundedRectangle")
-        .bind("figure", "fig"))
-    .add(new go.TextBlock("default text")
-        .bind("text"));
+    $(go.Node, "Auto",
+          $(go.Shape, "RoundedRectangle",  // the border
+            { fill: "white", strokeWidth: 2 },
+            new go.Binding("text","text")
+          ),
+          $(go.Panel, "Table",
+            $(go.RowColumnDefinition, { column: 1}),
+            $(go.TextBlock,
+              new go.Binding("text", "key"),
+              { row: 0, column: 0, margin: 10, width: 100, textAlign: "center", font: "16px system-ui" }),
+          )
+    )
     
     diagram.model = new go.GraphLinksModel(
   [ // the nodeDataArray
-    { key: "A" },
+    { key: "A" , text: "Hi"},
     { key: "B" },
     { key: "C" }
   ],

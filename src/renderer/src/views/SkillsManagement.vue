@@ -1,5 +1,13 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+import { getAllSkills } from '../services/skills.api'
 
+let skillsDat = ref(null)
+onMounted(async () => {
+    const res = await getAllSkills()
+    skillsDat.value = res.data.data
+
+})
 </script>
 <template>
     <v-container fluid class="pa-0">
@@ -11,12 +19,17 @@
                     </h1>
                 </v-col>
                 <v-col cols="6" class="d-flex justify-end align-center">
-                    <v-btn prepend-icon="plus" color="green">
+                    <v-btn v-if="skillsDat" prepend-icon="plus" color="green">
                         Add new skill
                     </v-btn>
                 </v-col>
             </v-row>
-            <v-row>
+            <div v-if="!skillsDat">
+                    <v-skeleton-loader type="card"></v-skeleton-loader>
+                    <v-skeleton-loader type="card"></v-skeleton-loader>
+                    <v-skeleton-loader type="card"></v-skeleton-loader>
+                </div>
+            <v-row v-if="skillsDat">
                 <v-col cols="12">
                     <v-card class="px-8 elevation-3 rounded-lg border">
                     <v-table class="border-0">
@@ -37,15 +50,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="x in 10">
-                                <td>{{ x }}</td>
+                            <tr v-for="x in skillsDat">
+                                <td>{{ x.id }}</td>
                                 <td class="align-center">
                                     <v-text-field class="py-2" hide-details variant="outlined" placeholder="Your skill name"
-                                        model-value="lmao"></v-text-field>
+                                        :model-value="x.skillName"></v-text-field>
                                 </td>
                                 <td>
                                     <v-textarea class="py-2" hide-details variant="outlined" placeholder="Your skill name"
-                                        model-value="lmao"></v-textarea>
+                                        :model-value="x.skillDescription"></v-textarea>
                                 </td>
                                 <td>
                                     <v-chip class="ma-2">
